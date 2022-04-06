@@ -84,6 +84,7 @@ if ( ! function_exists( 'twentyfifteen_setup' ) ) :
 		register_nav_menus(
 			array(
 				'primary' => __( 'Primary Menu', 'twentyfifteen' ),
+				'secondary' => __( 'Secondary Menu', 'twentyfifteen' ),
 				'social'  => __( 'Social Links Menu', 'twentyfifteen' ),
 			)
 		);
@@ -364,6 +365,9 @@ add_action( 'wp_head', 'twentyfifteen_javascript_detection', 0 );
  * @since Twenty Fifteen 1.0
  */
 function twentyfifteen_scripts() {
+	// Theme block stylesheet.
+	wp_enqueue_style( 'page_fullsize-css', get_template_directory_uri() . '/css/page_fullsize.css', [], '20190102' );
+
 	// Add custom fonts, used in the main stylesheet.
 	wp_enqueue_style( 'twentyfifteen-fonts', twentyfifteen_fonts_url(), array(), null );
 
@@ -567,7 +571,14 @@ add_filter( 'author_template', 'twentyfifteen_author_bio_template' );
  *
  * @since Twenty Fifteen 1.0
  */
-require get_template_directory() . '/inc/custom-header.php';
+// require get_template_directory() . '/inc/custom-header.php';
+
+/**
+ * Implement the Custom Header feature.
+ *
+ * @since Twenty Fifteen 1.0
+ */
+require get_template_directory() . '/inc/custom-top-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -589,3 +600,35 @@ require get_template_directory() . '/inc/customizer.php';
  * @since Twenty Fifteen 3.0
  */
 require get_template_directory() . '/inc/block-patterns.php';
+
+/**
+ * Convert HEX to RGB.
+ *
+ * @since Twenty Fifteen 1.0
+ *
+ * @param string $color The original color, in 3- or 6-digit hexadecimal form.
+ * @return array Array containing RGB (red, green, and blue) values for the given
+ *               HEX code, empty array otherwise.
+ */
+function twentyfifteen_hex2rgb( $color ) {
+	$color = trim( $color, '#' );
+
+	if ( strlen( $color ) === 3 ) {
+		$r = hexdec( substr( $color, 0, 1 ) . substr( $color, 0, 1 ) );
+		$g = hexdec( substr( $color, 1, 1 ) . substr( $color, 1, 1 ) );
+		$b = hexdec( substr( $color, 2, 1 ) . substr( $color, 2, 1 ) );
+	} elseif ( strlen( $color ) === 6 ) {
+		$r = hexdec( substr( $color, 0, 2 ) );
+		$g = hexdec( substr( $color, 2, 2 ) );
+		$b = hexdec( substr( $color, 4, 2 ) );
+	} else {
+		return array();
+	}
+
+	return array(
+		'red'   => $r,
+		'green' => $g,
+		'blue'  => $b,
+	);
+}
+

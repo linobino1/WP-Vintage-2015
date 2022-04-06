@@ -109,6 +109,15 @@ function twentyfifteen_customize_register( $wp_customize ) {
 
 	// Add an additional description to the header image section.
 	$wp_customize->get_section( 'header_image' )->description = __( 'Applied to the header on small screens and the sidebar on wide screens.', 'twentyfifteen' );
+
+
+	/**
+	 * Enable user to remove everything that's blog-like.
+	 *
+	 * @since Twenty Fifteen 1.0
+	 */
+	require get_template_directory() . '/inc/no-blog.php';
+
 }
 add_action( 'customize_register', 'twentyfifteen_customize_register', 11 );
 
@@ -183,7 +192,7 @@ function twentyfifteen_get_color_schemes() {
 			'default' => array(
 				'label'  => __( 'Default', 'twentyfifteen' ),
 				'colors' => array(
-					'#f1f1f1',
+					'#ffffff',
 					'#ffffff',
 					'#ffffff',
 					'#333333',

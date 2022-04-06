@@ -18,6 +18,9 @@
 if ( post_password_required() ) {
 	return;
 }
+if ( get_theme_mod( 'no_blog' ) ) {
+	return;
+}
 ?>
 
 <div id="comments" class="comments-area">

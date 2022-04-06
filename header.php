@@ -55,3 +55,8 @@
 	</div><!-- .sidebar -->
 
 	<div id="content" class="site-content">
+		<? if ( !empty( get_header_image() && !is_page_template( 'page_fullsize.php' ))) : ?>
+			<div class="top-header">
+				<img src="<?=get_header_image()?>">
+			</div>
+		<? endif; ?>
